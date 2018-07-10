@@ -1,0 +1,55 @@
+<% 
+no_color = @cat.color ? false : true
+no_sex = @cat.sex ? false : true
+action_url = @cat.persisted? ? cat_url(@cat) : cats_url
+%>
+
+<form action="<%= action_url %>" method="post">
+  
+  <% if @cat.persisted? %>
+    <input type="hidden" name="_method" value="patch">
+  <% end %>
+  
+  <label for="name">Name
+    <input id="name" type="text" name="cat[name]" value = "<%= @cat.name %>">
+  </label>
+  
+  <br>
+  
+  <label for="birth_date">Birth Date
+    <input id="birth_date" type="date" name="cat[birth_date]" value = "<%= @cat.birth_date %>">
+  </label>
+  
+  <br>
+  
+  <label for="color">Color
+    <select id="color" name="cat[color]">
+      <option <%= "selected" if no_color %> disabled="disabled">Select cat's color</option>
+      <% Cat::CAT_COLORS.each do |color| %>
+        <option value="<%= color %>" <%= "selected" if @cat.color == color%> ><%= color.capitalize %></option>
+      <% end %>
+    </select>
+  </label>
+  <br>
+  
+  <label for="sex">Sex
+    <select id="sex" name="cat[sex]">
+      <option <%= "selected" if no_sex %> disabled="disabled">Select cat's sex</option>
+      <option value="M" <%="selected" if @cat.sex == 'M' %>>Male</option>
+      <option value="F" <%= "selected" if @cat.sex == 'F' %>>Female</option>
+  
+    </select>
+  </label>
+  
+  <br>
+  
+  <label for="description">Description
+    <input id="description" type="textarea" name="cat[description]" 
+    value = "<%= @cat.description %>">
+  </label>
+  
+  <br>
+  
+  <input type="submit" value="Submit Cat">
+  
+</form>
