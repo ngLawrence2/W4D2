@@ -8,8 +8,22 @@
 
 ActiveRecord::Base.transaction do
   Cat.destroy_all
+  CatRentalRequest.destroy_all
+  
   c1 = Cat.create!(birth_date: '2015/01/20', color: 'white', name: 'mittens', sex: 'F')  
   c2 = Cat.create!(birth_date: '2000/05/20', color: 'black', name: 'reuwhr', sex: 'M') 
   c3 = Cat.create!(birth_date: '2018/03/02', color: 'yellow', name: 'dashu', sex: 'F') 
-  c4 = Cat.create!(birth_date: '2012/10/10', color: 'green', name: 'slime', sex: 'F') 
+  c4 = Cat.create!(birth_date: '2012/10/10', color: 'green', name: 'slime', sex: 'F')
+  
+  r1 = CatRentalRequest.create!(
+    start_date: DateTime.now, 
+    end_date: DateTime.tomorrow,
+    cat_id: c1.id)
+  
+  r2 = CatRentalRequest.create!(
+    start_date: DateTime.new(2001, 2, 3), 
+    end_date: DateTime.tomorrow,
+    cat_id: c1.id,
+    status: "APPROVED")
+   
 end 
